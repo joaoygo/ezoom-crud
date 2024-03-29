@@ -5,12 +5,22 @@ import 'package:ezoom_front/viewModel/user_view_model.dart';
 import 'package:ezoom_front/widgets/button_gradiente.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final LoginController _controller = LoginController();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,24 +96,27 @@ class Login extends StatelessWidget {
               ButtonGradiente(
                 txt: 'Login',
                 icon: const Icon(Icons.login),
-                onTap: () {
-                  void showBar(BuildContext context, String text) {
-                    final snackBar = SnackBar(content: Text(text));
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-
+                onTap: () async {
                   if (_formKey.currentState!.validate()) {
-                    showBar(context, 'Carregando ...');
-                    _controller.loginUser(UserViewModel(
-                        email: _emailController.text,
-                        password: _passwordController.text));
+                    bool isLoginSuccess = await _controller.loginUser(
+                        UserViewModel(
+                            email: _emailController.text,
+                            password: _passwordController.text));
 
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const Dashboard(),
-                      ),
-                    );
+                    if (isLoginSuccess && context.mounted) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const Dashboard(),
+                        ),
+                      );
+                    } else if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Email ou Senha Incorreto"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   }
                 },
               ),

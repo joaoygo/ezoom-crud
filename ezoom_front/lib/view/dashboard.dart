@@ -81,13 +81,13 @@ class _DashboardState extends State<Dashboard> {
                             delete: () {
                               _controller
                                   .removeTask(_controller.listTasks[index]);
-                              Get.showSnackbar(const GetSnackBar(
-                                title: 'Success',
-                                message: 'Order deleted',
-                                duration: Duration(seconds: 3),
-                                snackPosition: SnackPosition.TOP,
-                                backgroundColor: Colors.red,
-                              ));
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Atividade deletada"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
                             }),
                       ),
                     ),

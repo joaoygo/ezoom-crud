@@ -106,21 +106,25 @@ class Register extends StatelessWidget {
               ButtonGradiente(
                 txt: 'Registrar',
                 icon: const Icon(Icons.add),
-                onTap: () {
-                  void showBar(BuildContext context, String text) {
-                    final snackBar = SnackBar(content: Text(text));
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-
+                onTap: () async {
                   if (_formKey.currentState!.validate()) {
-                    showBar(context, 'Carregando ...');
-                    _controller.registerUser(UserViewModel(
-                        name: _nameController.text,
-                        email: _emailController.text,
-                        password: _passwordController.text));
+                    bool isRegisterSuccess = await _controller.registerUser(
+                        UserViewModel(
+                            name: _nameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text));
 
-                    Navigator.of(context).pop();
+                    if (isRegisterSuccess && context.mounted) {
+                      Navigator.of(context).pop();
+                    } else if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text("Verifique se os campos estão corretos"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   }
                 },
               ),

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class RegisterRepository {
   final urlBaseAPI = dotenv.env['URL_BASE_API'];
 
-  Future<void> register(UserViewModel user) async {
+  Future<bool> register(UserViewModel user) async {
     try {
       final Uri url = Uri.parse('${urlBaseAPI}register');
       final res = await http.post(url,
@@ -20,8 +20,10 @@ class RegisterRepository {
       if (res.statusCode == 201 &&
           responseData['message'] == 'User created successfully') {
         debugPrint("Register successfully");
+        return true;
       } else {
         debugPrint('Failed to register response');
+        return false;
       }
     } catch (e) {
       rethrow;

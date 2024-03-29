@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginRepository {
   final urlBaseAPI = dotenv.env['URL_BASE_API'];
 
-  Future<void> login(UserViewModel user) async {
+  Future<bool> login(UserViewModel user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       final Uri url = Uri.parse('${urlBaseAPI}autenticate');
@@ -24,8 +24,10 @@ class LoginRepository {
           responseData['token'] != null) {
         await prefs.setString('token', responseData['token']);
         debugPrint("Login successfully ${responseData['token']}");
+        return true;
       } else {
         debugPrint('Failed to Login response');
+        return false;
       }
     } catch (e) {
       rethrow;

@@ -26,7 +26,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: !isLoggedIn ? Login() : const Dashboard(),
+      home: !isLoggedIn ? const Login() : const Dashboard(),
     );
   }
 }

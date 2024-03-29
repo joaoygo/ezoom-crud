@@ -73,22 +73,20 @@ class _CreateTaskState extends State<CreateTask> {
                           await _controller.addTasks(TaskViewModel(
                               title: _titleController.text,
                               done: isCompleted.value));
-                          Get.showSnackbar(const GetSnackBar(
-                            title: 'Sucesso',
-                            message: 'Atividade Criada',
-                            duration: Duration(seconds: 3),
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: Colors.green,
-                          ));
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Atividade criada com sucesso"),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          }
                           isLoading.value = true;
                           if (context.mounted) Navigator.of(context).pop(true);
                         } else {
-                          Get.showSnackbar(
-                            const GetSnackBar(
-                              title: 'Erro',
-                              message: 'O título não pode estar vazio.',
-                              duration: Duration(seconds: 3),
-                              snackPosition: SnackPosition.TOP,
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("O título não pode estar vazio"),
                               backgroundColor: Colors.red,
                             ),
                           );

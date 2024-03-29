@@ -86,24 +86,23 @@ class _EditTaskState extends State<EditTask> {
                               createdAt: taskArgs.createdAt,
                               updatedAt: taskArgs.updatedAt,
                             ));
-                            Get.showSnackbar(const GetSnackBar(
-                              title: 'Sucesso',
-                              message: 'Atividade Atualizada',
-                              duration: Duration(seconds: 3),
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: Colors.green,
-                            ));
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text("Atividade atualizada com sucesso"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
                             isLoading.value = false;
                             if (context.mounted) {
                               Navigator.of(context).pop(true);
                             }
                           } else {
-                            Get.showSnackbar(
-                              const GetSnackBar(
-                                title: 'Erro',
-                                message: 'O título não pode estar vazio.',
-                                duration: Duration(seconds: 3),
-                                snackPosition: SnackPosition.TOP,
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("O título não pode estar vazio"),
                                 backgroundColor: Colors.red,
                               ),
                             );

@@ -5,9 +5,13 @@ import 'package:flutter/foundation.dart';
 class RegisterController {
   final RegisterRepository _repository = RegisterRepository();
 
-  Future<void> registerUser(UserViewModel user) async {
+  Future<bool> registerUser(UserViewModel user) async {
     try {
-      _repository.register(user);
+      bool isRegSuccess = await _repository.register(user);
+      if (isRegSuccess) {
+        return true;
+      }
+      return false;
     } on Exception catch (e) {
       debugPrint('$e');
       rethrow;
