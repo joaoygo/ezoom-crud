@@ -15,7 +15,7 @@ Certifique-se de ter os seguintes requisitos instalados em sua máquina antes de
 ### 1. Clonando o Repositório
 
 ```bash
-git clone git@github.com:joaoygo/ezoom-crud.git
+git clone https://github.com/joaoygo/ezoom-crud.git
 cd ezoom-crud
 ```
 
