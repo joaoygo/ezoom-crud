@@ -1,4 +1,4 @@
-# Projeto XYZ
+# Projeto Ezoom-CRUD
 
 Este é o README detalhado do Projeto Ezoom-CRUD. Este projeto é uma aplicação móvel que utiliza o framework Laravel para o backend, Flutter para o frontend móvel e MySQL como banco de dados.
 
